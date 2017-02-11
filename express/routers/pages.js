@@ -5,6 +5,10 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/edit',function(req,res,next){
+    res.render('edit')
+});
+router.get('/edit/submit',function(req,res,next){
+    console.log("触发了提交");
     res.render('edit',{"shit":"姚琳"})
 });
 router.get('/show',function(){

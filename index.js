@@ -13,6 +13,7 @@ app.set('view engine','ejs');
 app.set('views','express/views');
 // 托管静态资源
 app.use(express.static('pages'));
+app.use(express.static('express/views'));
 app.use('/shit',index);
 app.use('/pages',pages);
 app.listen("3000",function(){
@@ -23,29 +24,29 @@ var MongoClient = require('mongodb').MongoClient;
 // Connection URL
 var url = 'mongodb://localhost:27017/myproject';
 // Use connect method to connect to the Server
-MongoClient.connect(url, function(err, db) {
-   if (err == null)
-    console.log("Connected correctly to server");
-    console.log("Inserting... to server");
-    insertDocuments(db,function(result){
-        console.log(result);
-        db.close();
-    })
-    // console.log("Updating... to server");
-    // updateDocument(db,function(result){
-    //     console.log(result);
-    //     db.close();
-    // })
-    // console.log("deleting... to server");
-    // deleteDocument(db,function (result) {
-    //     console.log(result);
-    //          db.close();
-    // })
-    // findDocuments(db,function(result){
-    //     db.close();
-    // })
-
-});
+// MongoClient.connect(url, function(err, db) {
+//    // if (err == null)
+//    //  console.log("Connected correctly to server");
+//    //  console.log("Inserting... to server");
+//    //  insertDocuments(db,function(result){
+//    //      console.log(result);
+//    //      db.close();
+//    //  })
+//     // console.log("Updating... to server");
+//     // updateDocument(db,function(result){
+//     //     console.log(result);
+//     //     db.close();
+//     // })
+//     // console.log("deleting... to server");
+//     // deleteDocument(db,function (result) {
+//     //     console.log(result);
+//     //          db.close();
+//     // })
+//     // findDocuments(db,function(result){
+//     //     db.close();
+//     // })
+//
+// });
 var insertDocuments = function(db, callback) {
     // Get the documents collection
     var collection = db.collection('test');

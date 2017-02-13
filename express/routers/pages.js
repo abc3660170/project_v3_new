@@ -42,7 +42,7 @@ router.get('/show',function(req,res,next){
     var url = 'mongodb://localhost:27017/pm';
     var data = new Object();
     data.name = req.query.name;
-    data.tags = req.query.tags;
+    data.tags = req.query.tags != undefined ? req.query.tags.split(","):req.query.tags;
     mongoClient.connect(url,function(err,db){
         findDocuments(db,data,function(result){
             res.render('list',{"list":result});
@@ -52,7 +52,8 @@ router.get('/show',function(req,res,next){
         // Get the documents collection
         var collection = db.collection('list');
         // Find some documents
-        collection.find({name:data.name}).toArray(function(err, docs) {
+        //todo 这地方逻辑有问题
+        collection.find({name:{$regex:data.name,$options:'i'},tags:{$in:data.tags}}).toArray(function(err, docs) {
             console.log("Found the following records");
             console.dir(docs);
             callback(docs);

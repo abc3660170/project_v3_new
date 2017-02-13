@@ -12,9 +12,11 @@
       </div>
       <div class="result">
         <ul>
+          <%if(list){%>
           <% list.forEach(function(item){%>
               <li><%= item.name %>:<%= item.url %></li>
           <%}) %>
+          <%}%>
         </ul>
 
       </div>

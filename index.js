@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var ejs = require('ejs');
+var bodyParser = require('body-parser');
 var app = new express();
 var assert = require('assert');
 var index = require('./express/routers/welcome');
@@ -11,9 +12,12 @@ var pages = require('./express/routers/pages');
 app.set('view engine','ejs');
 //手动设置模板目录
 app.set('views','express/views');
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 // 托管静态资源
 app.use(express.static('pages'));
 app.use(express.static('express/views'));
+
 app.use('/shit',index);
 app.use('/pages',pages);
 app.listen("3000",function(){

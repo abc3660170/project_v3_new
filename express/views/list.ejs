@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>页面查看</title>
+     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+  </head>
+  <body>
+    <div id="container">
+      <div class="inputs">
+        <input type="text" id="name" placeholder="请输入名称">
+        <input type="text" id="tags" placeholder="请输入tags以空格或逗号隔开">
+      </div>
+      <div class="result">
+        <ul>
+          <% list.forEach(function(item){%>
+              <li><%= item.name %>:<%= item.url %></li>
+          <%}) %>
+        </ul>
+
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="../js/jquery.js"></script>
+  <script>
+    function query(){
+      var name = $("#name").val();
+      var tags = $("#tags").val();
+      window.location.href="/pages/show?name="+name+"&tags="+tags
+    }
+    $(document).ready(function () {
+      $(".inputs input[type=text]").on("change",function(){
+        query()
+      })
+    })
+
+  </script>
+</html>

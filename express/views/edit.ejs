@@ -7,6 +7,10 @@
   <body>
     <div id="container">
       <div class="inputs">
+        <label>名称：</label>
+        <input type="text" id="name">
+      </div>
+      <div class="inputs">
         <label>首页URL：</label>
         <input type="text" id="url">
       </div>
@@ -24,14 +28,23 @@
   <script>
     $(document).ready(function () {
       $("#submit").on("click",function(){
+        var name = $("#name").val();
         var url = $("#url").val();
         var tags = $("#tags").val();
-        $.ajax({
+        $.post({
           url:"/pages/edit/submit",
-          data:"url="+url+"&tags="+tags,
-          type:"post",
+          data:{
+            "name":name,
+            "url":url,
+            "tags":tags
+          },
           success: function(msg){
-            alert( "Data Saved: " + msg );
+            if(msg.result.ok){
+              alert( "添加成功");
+            }else{
+              alert( "添加失败");
+            }
+
           }
         })
       })

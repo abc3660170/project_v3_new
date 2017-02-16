@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>新增页面</title>
-     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+     <link rel="stylesheet" type="text/css" href="/express/views/css/bootstrap.css">
   </head>
   <body>
     <div id="container">
@@ -24,9 +24,25 @@
       </div>
     </div>
   </body>
-  <script type="text/javascript" src="../js/jquery.js"></script>
+  <script type="text/javascript" src="/express/views/js/jquery.js"></script>
   <script>
     $(document).ready(function () {
+      $("#url").on("change",function(){
+        var url = $("#url").val();
+        $.post({
+          url:"/validate/exists",
+          data:{
+            "url":url
+          },
+          success: function(existd){
+            if(existd){
+              alert( "验证成功");
+            }else{
+              alert( "验证失败");
+            }
+          }
+        })
+      })
       $("#submit").on("click",function(){
         var name = $("#name").val();
         var url = $("#url").val();
@@ -40,11 +56,10 @@
           },
           success: function(msg){
             if(msg.result.ok){
-              alert( "添加成功");
+              window.location.href="/pages/show";
             }else{
               alert( "添加失败");
             }
-
           }
         })
       })

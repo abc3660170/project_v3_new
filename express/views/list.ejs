@@ -2,36 +2,50 @@
 <html>
   <head>
     <title>页面查看</title>
-     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+     <link rel="stylesheet" type="text/css" href="/express/views/css/bootstrap.css">
   </head>
   <body>
     <div id="container">
       <div class="inputs">
-        <input type="text" id="name" placeholder="请输入名称">
-        <input type="text" id="tags" placeholder="请输入tags以空格或逗号隔开">
+        <input type="text" id="name" value="<%= condition.name %>" placeholder="请输入名称">
+        <input type="text" id="tags" value="<%= condition.tags %>" placeholder="请输入tags以空格或逗号隔开">
+        <button id="query">查询</button>
+        <a href="javascript:;" class="toAdd">新增页面</a>
       </div>
       <div class="result">
         <ul>
           <%if(list){%>
           <% list.forEach(function(item){%>
-              <li><%= item.name %>:<%= item.url %></li>
+              <li url="<%= item.url %>"><%= item.name %>:<%= item.url %></li>
           <%}) %>
           <%}%>
         </ul>
 
       </div>
     </div>
+    <div style=" position:absolute; top:0px;right:0px;width:1200px; height: 900px;">
+      <iframe src="" frameborder="0" width="100%" height="100%"></iframe>
+    </div>
   </body>
-  <script type="text/javascript" src="../js/jquery.js"></script>
+  <script type="text/javascript" src="/express/views/js/jquery.js"></script>
   <script>
     function query(){
       var name = $("#name").val();
       var tags = $("#tags").val();
       window.location.href="/pages/show?name="+name+"&tags="+tags
     }
+    function toAdd(){
+      window.location.href="/pages/edit";
+    }
     $(document).ready(function () {
-      $(".inputs input[type=text]").on("change",function(){
+      $("#query").on("click",function(){
         query()
+      })
+      $(".toAdd").on("click",function(){
+        toAdd()
+      })
+      $("li").on("mouseover",function(){
+        $("iframe").attr("src","/"+$(this).attr("url"))
       })
     })
 

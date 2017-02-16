@@ -45,15 +45,25 @@ router.get('/show',function(req,res,next){
     data.tags = req.query.tags != undefined ? req.query.tags.split(","):req.query.tags;
     mongoClient.connect(url,function(err,db){
         findDocuments(db,data,function(result){
-            res.render('list',{"list":result});
+            res.render('list',{"list":result,"condition":req.query});
         })
     });
     var findDocuments = function(db,data, callback) {
         // Get the documents collection
         var collection = db.collection('list');
+        var condition = new Object();
+        // 条件的判空和异常判断
+        if(data.name!=undefined && data.name != null && data.name != ""){
+            condition.name = {$regex:data.name,$options:'i'};
+        }
+        if(data.tags != undefined && data.tags != null && data.tags != "" && data.tags.length > 0){
+            condition.tags = {$all:data.tags};
+        }
         // Find some documents
         //todo 这地方逻辑有问题
-        collection.find({name:{$regex:data.name,$options:'i'},tags:{$in:data.tags}}).toArray(function(err, docs) {
+        collection.find(condition).toArray(function(err, docs) {
+            //查询日志
+            console.dir(condition);
             console.log("Found the following records");
             console.dir(docs);
             callback(docs);

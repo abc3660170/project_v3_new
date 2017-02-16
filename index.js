@@ -8,6 +8,7 @@ var app = new express();
 var assert = require('assert');
 var index = require('./express/routers/welcome');
 var pages = require('./express/routers/pages');
+var validate = require('./express/routers/validate');
 //设置模板引擎
 app.set('view engine','ejs');
 //手动设置模板目录
@@ -15,11 +16,14 @@ app.set('views','express/views');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 // 托管静态资源
-app.use(express.static('pages'));
-app.use(express.static('express/views'));
+app.use("/",express.static(__dirname));
+// app.use(express.static('express/views'));
+app.use("/qixi",express.static('qixi'));
+app.use("/pages",express.static('pages'));
 
 app.use('/shit',index);
 app.use('/pages',pages);
+app.use('/validate',validate);
 app.listen("3000",function(){
     console.log("project_v3_new is listening on 3000")
 });

@@ -3,7 +3,8 @@
  */
 var express = require('express');
 var router = express.Router();
-
+var config = require("../config.json");
+var tools = require("../tools/tools");
 // 跳转到编辑页面
 router.get('/edit',function(req,res,next){
     res.render('edit')
@@ -11,7 +12,7 @@ router.get('/edit',function(req,res,next){
 router.post('/edit/submit',function(req,res,next){
     //todo 新增页面
     var mongoClient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/pm';
+    var url = tools.getMongoUrl();
     var data = new Object();
     data.name = req.body.name;
     data.url = req.body.url;
@@ -39,7 +40,7 @@ router.post('/edit/submit',function(req,res,next){
 router.get('/show',function(req,res,next){
     //todo 展示页面列表
     var mongoClient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/pm';
+    var url = tools.getMongoUrl();
     var data = new Object();
     data.name = req.query.name;
     data.tags = req.query.tags != undefined ? req.query.tags.split(","):req.query.tags;

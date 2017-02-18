@@ -1,0 +1,10 @@
+{
+  "mongo":{
+    "__comment":"username和password参数可选",
+    "host":"127.0.0.1",
+    "port":"27017",
+    "username":"chentao",
+    "password":"123456",
+    "database":"pm"
+  }
+}
